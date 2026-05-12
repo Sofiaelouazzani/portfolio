@@ -1,0 +1,376 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#e8dfc8;--ink2:#c4b89a;--ink3:#8a7a60;
+  --paper:#1a1612;--paper2:#231f1a;--paper3:#2e2820;
+  --accent:#c47a2e;--accent2:#3b5fa0;--accent3:#7a3a8a;
+  --line:#3a3028;
+}
+
+.portfolio{font-family:'Special Elite',serif;background:var(--paper);min-height:100vh;color:var(--ink);position:relative;overflow-x:hidden}
+
+.lines-bg{position:fixed;top:0;left:0;width:100%;height:100%;background-image:repeating-linear-gradient(transparent,transparent 27px,rgba(255,255,255,0.025) 27px,rgba(255,255,255,0.025) 28px);pointer-events:none;z-index:0}
+.margin-line{position:fixed;top:0;left:72px;width:1px;height:100%;background:rgba(232,160,160,0.12);pointer-events:none;z-index:1}
+.doodle-layer{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+
+/* NAV */
+.sticky-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(26,22,18,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:0;padding:0 1rem}
+.nav-logo{font-family:'Caveat',cursive;font-size:1.2rem;font-weight:700;color:var(--ink);margin-right:auto;padding:.6rem 0;transform:rotate(-1deg);display:inline-block}
+.nav-link{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink3);text-decoration:none;padding:.65rem .9rem;cursor:pointer;border:none;background:none;transition:color .2s;position:relative}
+.nav-link::after{content:'';position:absolute;bottom:6px;left:.9rem;right:.9rem;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s;transform-origin:left}
+.nav-link.active{color:var(--ink)}
+.nav-link.active::after{transform:scaleX(1)}
+.nav-link:hover{color:var(--ink)}
+
+/* SECTIONS */
+.section{min-height:auto;padding:3.5rem 2rem 3rem;position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center}
+.section-inner{max-width:860px;margin:0 auto;width:100%}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}.stagger-4{transition-delay:.4s}.stagger-5{transition-delay:.5s}.stagger-6{transition-delay:.6s}
+
+/* HERO */
+.hero-section{min-height:85vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 3rem;position:relative;z-index:2}
+.hero-name{font-family:'Caveat',cursive;font-size:clamp(4rem,10vw,6.5rem);font-weight:700;color:var(--ink);display:inline-block;transform:rotate(-1.5deg);line-height:1.1;text-shadow:0 0 40px rgba(196,122,46,0.2)}
+.hero-sub{font-family:'Caveat',cursive;font-size:1.7rem;color:var(--ink2);transform:rotate(.5deg);display:inline-block;margin:.5rem 0}
+.hero-tags{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin:1rem 0}
+.hero-tag{font-family:'Caveat',cursive;font-size:1.1rem;border:1px solid var(--line);border-radius:20px;padding:4px 18px;color:var(--ink3);transition:all .2s}
+.hero-tag:hover{border-color:var(--accent);color:var(--accent)}
+.hero-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem}
+.hero-link{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--accent2);text-decoration:none;border-bottom:1.5px solid var(--accent2);padding:2px 6px;transform:rotate(-.5deg);display:inline-block;transition:all .2s}
+.hero-link:hover{color:var(--accent);border-color:var(--accent);transform:rotate(.5deg) scale(1.05)}
+.scroll-hint{margin-top:2rem;font-family:'Caveat',cursive;font-size:1.05rem;color:var(--ink3);animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* SECTION HEADERS */
+.section-label{font-family:'Caveat',cursive;font-size:1rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.section-title{font-family:'Caveat',cursive;font-size:2.9rem;font-weight:700;color:var(--ink);display:inline-block;transform:rotate(-1deg);border-bottom:2.5px solid var(--accent);padding-bottom:4px;margin-bottom:1.5rem}
+.section-divider{height:1px;background:linear-gradient(to right,var(--accent),transparent);margin-bottom:1.5rem;opacity:.4}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.4rem;position:relative;z-index:1}
+.card-title{font-family:'Caveat',cursive;font-size:1.2rem;font-weight:700;color:var(--ink);margin:.4rem 0;line-height:1.2}
+.card-desc{font-size:.78rem;color:var(--ink3);line-height:1.5;margin-bottom:.6rem;font-family:sans-serif}
+.tag{font-family:'Caveat',cursive;font-size:.85rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:2px 8px;color:var(--ink3)}
+.tag.ai{background:rgba(30,90,60,.3);border-color:#2a6a44;color:#6adda0}
+.tag.sec{background:rgba(90,20,20,.3);border-color:#8a3333;color:#ff9999}
+.tag.embed{background:rgba(20,30,90,.3);border-color:#334488;color:#99aaff}
+.exp-role{font-family:'Caveat',cursive;font-size:1.2rem;font-weight:700;color:var(--ink);line-height:1.2}
+.exp-company{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink3)}
+.exp-date-tag{font-family:'Caveat',cursive;font-size:.95rem;color:var(--accent);white-space:nowrap}
+.exp-location{font-family:'Caveat',cursive;font-size:.85rem;color:var(--ink3);white-space:nowrap}
+.exp-bullets{font-family:sans-serif;font-size:.78rem;color:var(--ink3);line-height:1.8;padding-left:1rem;margin-bottom:.5rem}
+.exp-filter-btn{font-family:'Caveat',cursive;font-size:1.05rem;background:transparent;border:1px solid var(--line);border-radius:20px;padding:4px 18px;cursor:pointer;color:var(--ink3);transition:all .2s}
+.exp-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#1a0f00}
+.exp-filter-btn:hover:not(.active){border-color:var(--accent);color:var(--ink)}
+.about-text{font-family:'Caveat',cursive;font-size:1.25rem;line-height:1.9;color:var(--ink2)}
+.skill-cat-title{font-family:'Caveat',cursive;font-weight:700;color:var(--accent);font-size:1.1rem;margin-bottom:.2rem}
+.skill-items{font-family:'Caveat',cursive;color:var(--ink3);font-size:1rem;line-height:1.7}
+.contact-label{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;color:inherit;display:block;line-height:1.2}
+.contact-val{font-family:'Caveat',cursive;font-size:.92rem;color:var(--ink3);display:block}
+.nav-logo{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;color:var(--ink);margin-right:auto;padding:.6rem 0;transform:rotate(-1deg);display:inline-block}
+.nav-link{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--ink3);text-decoration:none;padding:.65rem 1rem;cursor:pointer;border:none;background:none;transition:color .2s;position:relative}
+
+/* PROJECTS */
+.projects-section{background:var(--paper)}
+.corkboard{background:#2a2018;border:2px solid #4a3820;border-radius:8px;padding:1.5rem;position:relative}
+.corkboard::before{content:'';position:absolute;inset:0;border-radius:6px;background-image:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(255,255,255,0.015) 5px,rgba(255,255,255,0.015) 6px)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.3rem;position:relative;z-index:1}
+.project-card{background:#231f1a;border:1px solid #3a3028;border-radius:4px;padding:1rem;cursor:pointer;position:relative;transition:transform .3s,box-shadow .3s,border-color .3s;box-shadow:2px 4px 12px rgba(0,0,0,.5)}
+.project-card:nth-child(1){transform:rotate(-2deg)}.project-card:nth-child(2){transform:rotate(1.5deg)}.project-card:nth-child(3){transform:rotate(-1deg)}.project-card:nth-child(4){transform:rotate(2deg)}.project-card:nth-child(5){transform:rotate(-1.5deg)}.project-card:nth-child(6){transform:rotate(1deg)}
+.project-card:hover{transform:rotate(0deg) scale(1.05) !important;box-shadow:0 8px 30px rgba(196,122,46,.25);border-color:var(--accent);z-index:10}
+.pin{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:13px;height:13px;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.6)}
+.pin-red{background:#cc2200}.pin-blue{background:#1144cc}.pin-green{background:#119944}.pin-yellow{background:#cc9900}.pin-purple{background:#6600cc}.pin-orange{background:#cc5500}
+.card-title{font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--ink);margin:.4rem 0;line-height:1.2}
+.card-desc{font-size:.68rem;color:var(--ink3);line-height:1.5;margin-bottom:.6rem;font-family:sans-serif}
+.tech-tags{display:flex;flex-wrap:wrap;gap:3px}
+.tag{font-family:'Caveat',cursive;font-size:.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:1px 6px;color:var(--ink3)}
+.tag.ai{background:rgba(30,90,60,.3);border-color:#2a6a44;color:#6adda0}
+.tag.sec{background:rgba(90,20,20,.3);border-color:#8a3333;color:#ff9999}
+.tag.embed{background:rgba(20,30,90,.3);border-color:#334488;color:#99aaff}
+
+/* EXPERIENCE */
+.exp-section{background:var(--paper2)}
+.exp-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.exp-filter-btn{font-family:'Caveat',cursive;font-size:.95rem;background:transparent;border:1px solid var(--line);border-radius:20px;padding:3px 14px;cursor:pointer;color:var(--ink3);transition:all .2s}
+.exp-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#1a0f00}
+.exp-filter-btn:hover:not(.active){border-color:var(--accent);color:var(--ink)}
+.exp-timeline{display:flex;flex-direction:column;gap:.85rem;position:relative}
+.exp-timeline::before{content:'';position:absolute;left:14px;top:8px;bottom:8px;width:1px;background:repeating-linear-gradient(to bottom,var(--accent) 0,var(--accent) 5px,transparent 5px,transparent 11px);opacity:.5}
+.exp-card{background:var(--paper3);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-left:30px;transition:border-color .25s,box-shadow .25s}
+.exp-card:nth-child(odd){transform:rotate(-.35deg)}.exp-card:nth-child(even){transform:rotate(.25deg)}
+.exp-card:hover{border-color:rgba(196,122,46,.4);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.exp-card-header{display:flex;align-items:center;gap:10px;padding:.7rem 1rem;cursor:pointer;position:relative;user-select:none}
+.exp-card-header:hover{background:rgba(196,122,46,.05)}
+.exp-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;position:absolute;left:-22px;border:2px solid var(--paper2)}
+.dot-purple{background:#8844cc}.dot-blue{background:#2255dd}.dot-orange{background:#cc6600}.dot-green{background:#229944}.dot-pink{background:#cc3377}
+.exp-card-info{flex:1;min-width:0}
+.exp-role{font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--ink);line-height:1.2}
+.exp-company{font-family:'Caveat',cursive;font-size:.85rem;color:var(--ink3)}
+.exp-date-tag{font-family:'Caveat',cursive;font-size:.82rem;color:var(--accent);white-space:nowrap}
+.exp-location{font-family:'Caveat',cursive;font-size:.72rem;color:var(--ink3);white-space:nowrap}
+.exp-chevron{font-size:.9rem;color:var(--ink3);transition:transform .25s;flex-shrink:0;margin-left:6px}
+.exp-card[data-open="true"] .exp-chevron{transform:rotate(180deg)}
+.exp-card-body{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s}
+.exp-card[data-open="true"] .exp-card-body{max-height:400px;padding:0 1rem .75rem 1rem}
+.exp-bullets{font-family:sans-serif;font-size:.68rem;color:var(--ink3);line-height:1.7;padding-left:1rem;margin-bottom:.5rem}
+.exp-tags-row{display:flex;flex-wrap:wrap;gap:3px}
+
+/* ABOUT */
+.about-section{background:var(--paper)}
+.notebook-page{background:var(--paper2);border:1px solid var(--line);border-radius:4px;padding:1.5rem 1.5rem 1.5rem 3rem;position:relative}
+.notebook-page::before{content:'';position:absolute;top:0;left:46px;bottom:0;width:1px;background:rgba(232,160,160,0.1)}
+.about-text{font-family:'Caveat',cursive;font-size:1.1rem;line-height:1.85;color:var(--ink2)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.2rem}
+.skill-cat-title{font-family:'Caveat',cursive;font-weight:700;color:var(--accent);font-size:1rem;margin-bottom:.2rem}
+.skill-items{font-family:'Caveat',cursive;color:var(--ink3);font-size:.9rem;line-height:1.7}
+
+/* CONTACT */
+.contact-section{background:var(--paper2)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-top:.5rem}
+.contact-card{background:var(--paper3);border:1px solid var(--line);border-radius:6px;padding:1rem;display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--ink);transition:all .25s;transform:rotate(-.5deg)}
+.contact-card:nth-child(even){transform:rotate(.4deg)}
+.contact-card:hover{border-color:var(--accent);color:var(--accent);transform:rotate(0deg) scale(1.04)}
+.contact-icon{font-size:1.4rem;flex-shrink:0}
+.contact-label{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:inherit;display:block;line-height:1.2}
+.contact-val{font-family:'Caveat',cursive;font-size:.82rem;color:var(--ink3);display:block}
+.cert-card{background:var(--paper3);border:1px solid rgba(59,95,160,.4);border-radius:6px;padding:1rem;margin-top:1.5rem;transform:rotate(.5deg);display:inline-block}
+.cert-title{font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:#6699dd}
+.cert-sub{font-family:'Caveat',cursive;font-size:.85rem;color:var(--ink3);margin-top:2px}
+.edu-card{background:var(--paper3);border:1px solid rgba(196,122,46,.3);border-radius:4px;padding:1rem;margin-top:1rem;transform:rotate(-.4deg);display:inline-block}
+
+/* PROGRESS BAR for scroll */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:200;transition:width .1s linear}
+</style>
+
+<div class="portfolio">
+  <div class="lines-bg"></div>
+  <div class="margin-line"></div>
+  <div class="doodle-layer" id="doodleLayer"></div>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <nav class="sticky-nav">
+    <span class="nav-logo">SE.</span>
+    <button class="nav-link active" onclick="scrollTo('hero')">Home</button>
+    <button class="nav-link" onclick="scrollTo('projects')">Projects</button>
+    <button class="nav-link" onclick="scrollTo('experience')">Experience</button>
+    <button class="nav-link" onclick="scrollTo('about')">About</button>
+    <button class="nav-link" onclick="scrollTo('contact')">Contact</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section" id="hero">
+    <div class="reveal">
+      <div class="hero-name">Sofia Elouazzani</div>
+    </div>
+    <div class="reveal stagger-1">
+      <div class="hero-sub">CS + Physics @ uOttawa &nbsp;·&nbsp; Class of 2027</div>
+    </div>
+    <div class="hero-tags reveal stagger-2">
+      <span class="hero-tag">AI / ML</span>
+      <span class="hero-tag">Computer Vision</span>
+      <span class="hero-tag">Cybersecurity</span>
+      <span class="hero-tag">Embedded Systems</span>
+      <span class="hero-tag">Full-Stack</span>
+    </div>
+    <div class="hero-links reveal stagger-3">
+      <a href="mailto:selou073@uottawa.ca" class="hero-link">✉ Email</a>
+      <a href="https://linkedin.com/in/sofia-elouazzani" class="hero-link">LinkedIn</a>
+      <a href="https://github.com/Sofiaelouazzani" class="hero-link">GitHub</a>
+    </div>
+    <div class="scroll-hint reveal stagger-4">↓ scroll to explore</div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section projects-section" id="projects">
+    <div class="section-inner">
+      <div class="reveal"><div class="section-label">what i've built</div><div class="section-title">Projects</div></div>
+      <div class="section-divider reveal stagger-1"></div>
+      <div class="corkboard reveal stagger-2">
+        <div class="cards-grid">
+          <div class="project-card reveal stagger-1"><div class="pin pin-red"></div><div class="card-title">AI Poultry Behavior Detection</div><div class="card-desc">Real-time CV pipeline for automated animal behavior detection. Processed 100k+ video frames with deep learning & spatio-temporal analysis.</div><div class="tech-tags"><span class="tag ai">YOLOv8</span><span class="tag ai">OpenCV</span><span class="tag ai">PyTorch</span><span class="tag">NumPy</span></div></div>
+          <div class="project-card reveal stagger-2"><div class="pin pin-blue"></div><div class="card-title">Steganography iOS App</div><div class="card-desc">Hides & retrieves messages in images via LSB pixel manipulation. Real-time on-device encryption & decryption.</div><div class="tech-tags"><span class="tag">SwiftUI</span><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Firebase</span></div></div>
+          <div class="project-card reveal stagger-3"><div class="pin pin-purple"></div><div class="card-title">Security Simulation App</div><div class="card-desc">Cross-platform desktop app simulating ransomware (WannaCry-inspired). Deployed to 20+ users on macOS & Windows.</div><div class="tech-tags"><span class="tag sec">Tauri</span><span class="tag sec">Rust</span><span class="tag">JavaScript</span></div></div>
+          <div class="project-card reveal stagger-4"><div class="pin pin-green"></div><div class="card-title">Facial Recognition Web App</div><div class="card-desc">OpenCV + deep learning model for gender & age prediction. 90% confidence on uploaded images.</div><div class="tech-tags"><span class="tag ai">OpenCV</span><span class="tag">Flask</span><span class="tag ai">Deep Learning</span></div></div>
+          <div class="project-card reveal stagger-5"><div class="pin pin-yellow"></div><div class="card-title">Arduino Projects Series</div><div class="card-desc">Ongoing embedded systems projects in C++ — motion sensors, object detection, automation. All on GitHub.</div><div class="tech-tags"><span class="tag embed">C++</span><span class="tag embed">Arduino</span><span class="tag">AutoDesk Fusion</span></div></div>
+          <div class="project-card reveal stagger-6"><div class="pin pin-orange"></div><div class="card-title">AI/ML Research — UdeM</div><div class="card-desc">Transformed a high-false-positive CV pipeline into a robust real-time detection framework via trajectory analysis.</div><div class="tech-tags"><span class="tag ai">YOLOv8</span><span class="tag ai">Pandas</span><span class="tag">OpenCV</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section exp-section" id="experience">
+    <div class="section-inner">
+      <div class="reveal"><div class="section-label">where i've worked</div><div class="section-title">Experience</div></div>
+      <div class="section-divider reveal stagger-1"></div>
+      <div class="exp-filters reveal stagger-2">
+        <button class="exp-filter-btn active" onclick="filterExp('all',this)">All</button>
+        <button class="exp-filter-btn" onclick="filterExp('tech',this)">Tech</button>
+        <button class="exp-filter-btn" onclick="filterExp('research',this)">Research</button>
+        <button class="exp-filter-btn" onclick="filterExp('other',this)">Other</button>
+      </div>
+      <div class="exp-timeline" id="expTimeline">
+        <div class="exp-card reveal stagger-1" data-cat="research" data-open="false"><div class="exp-card-header" onclick="toggleExp(this)"><div class="exp-dot dot-purple"></div><div class="exp-card-info"><div class="exp-role">Research Assistant — AI/ML</div><div class="exp-company">Université de Montréal</div></div><div style="margin-left:auto;text-align:right"><div class="exp-date-tag">Jan – May 2026</div><div class="exp-location">Montréal, QC</div></div><div class="exp-chevron">▾</div></div><div class="exp-card-body"><ul class="exp-bullets"><li>Built YOLOv8 segmentation + multi-object tracking pipeline, eliminating high false-positive rates</li><li>Spatio-temporal detection using NumPy, OpenCV & trajectory analysis</li><li>End-to-end F1-score evaluation pipeline via Python & Pandas</li></ul><div class="exp-tags-row"><span class="tag ai">YOLOv8</span><span class="tag ai">OpenCV</span><span class="tag">Python</span><span class="tag">Pandas</span></div></div></div>
+
+        <div class="exp-card reveal stagger-2" data-cat="tech" data-open="false"><div class="exp-card-header" onclick="toggleExp(this)"><div class="exp-dot dot-blue"></div><div class="exp-card-info"><div class="exp-role">Software Developer Intern</div><div class="exp-company">Awarino Data Protect</div></div><div style="margin-left:auto;text-align:right"><div class="exp-date-tag">May – Aug 2025</div><div class="exp-location">Casablanca, Morocco</div></div><div class="exp-chevron">▾</div></div><div class="exp-card-body"><ul class="exp-bullets"><li>Built cybersecurity awareness games including ransomware & phishing simulations</li><li>QA testing & vulnerability checks; improved training completion rates by 40%</li><li>Analyzed user performance data, boosting engagement insights</li></ul><div class="exp-tags-row"><span class="tag sec">Cybersecurity</span><span class="tag">QA Testing</span></div></div></div>
+
+        <div class="exp-card reveal stagger-3" data-cat="other" data-open="false"><div class="exp-card-header" onclick="toggleExp(this)"><div class="exp-dot dot-orange"></div><div class="exp-card-info"><div class="exp-role">Account Executive</div><div class="exp-company">Job Hunting U</div></div><div style="margin-left:auto;text-align:right"><div class="exp-date-tag">Jan – Mar 2025</div><div class="exp-location">Toronto · Remote</div></div><div class="exp-chevron">▾</div></div><div class="exp-card-body"><ul class="exp-bullets"><li>Utilized CRM software to manage & track client interactions</li><li>Segmented accounts to improve client engagement by 30%</li><li>Created CRM reports that optimized business outcomes by 26%</li><li>Streamlined follow-ups to drive growth and customer satisfaction</li></ul><div class="exp-tags-row"><span class="tag">CRM</span><span class="tag">Data Analysis</span><span class="tag">Sales</span></div></div></div>
+
+        <div class="exp-card reveal stagger-4" data-cat="tech" data-open="false"><div class="exp-card-header" onclick="toggleExp(this)"><div class="exp-dot dot-green"></div><div class="exp-card-info"><div class="exp-role">Processing & Management Intern</div><div class="exp-company">OB Electronique</div></div><div style="margin-left:auto;text-align:right"><div class="exp-date-tag">Jun – Aug 2024</div><div class="exp-location">Normandie, France</div></div><div class="exp-chevron">▾</div></div><div class="exp-card-body"><ul class="exp-bullets"><li>Improved chip fabrication etching → 10% reduction in processing time</li><li>99% quality rating in Photolithography & etching execution</li><li>VBA-powered Excel tracker → 30% efficiency improvement</li></ul><div class="exp-tags-row"><span class="tag">VBA</span><span class="tag">Excel</span><span class="tag embed">Hardware</span></div></div></div>
+
+        <div class="exp-card reveal stagger-5" data-cat="other" data-open="false"><div class="exp-card-header" onclick="toggleExp(this)"><div class="exp-dot dot-pink"></div><div class="exp-card-info"><div class="exp-role">Junior VP of Communications</div><div class="exp-company">CS Student Association · uOttawa</div></div><div style="margin-left:auto;text-align:right"><div class="exp-date-tag">Sep 2023 – Apr 2024</div><div class="exp-location">Ottawa, ON</div></div><div class="exp-chevron">▾</div></div><div class="exp-card-body"><ul class="exp-bullets"><li>Led publication of the monthly CSSA newsletter</li><li>Designed public-facing HTML/CSS emails for monthly news</li><li>Grew CSSA Instagram to 1,000+ followers (60% increase)</li><li>Coded the newsletter in HTML/CSS, boosting community engagement</li></ul><div class="exp-tags-row"><span class="tag">HTML/CSS</span><span class="tag">Communications</span><span class="tag">Social Media</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section about-section" id="about">
+    <div class="section-inner">
+      <div class="reveal"><div class="section-label">who i am</div><div class="section-title">About me</div></div>
+      <div class="section-divider reveal stagger-1"></div>
+      <div class="notebook-page reveal stagger-2">
+        <div class="about-text">Hi! I'm Sofia — a CS + Physics student at uOttawa passionate about AI, computer vision, and cybersecurity. I love building things at the intersection of math and the real world — training detection models on livestock footage, working on chip fabrication lines, or simulating ransomware to help people stay safe online.<br><br>I speak French, English, Arabic & Spanish, and I've worked across three countries. Currently contributing to the <strong style="color:var(--ink)">Competitive Autonomous Vehicles Team</strong> at uOttawa.</div>
+        <div style="margin-top:1.2rem;border-top:1px dashed rgba(255,255,255,.1);padding-top:1rem">
+          <div style="font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--accent);margin-bottom:.6rem">Skills</div>
+          <div class="skills-grid">
+            <div><div class="skill-cat-title">Languages</div><div class="skill-items">Python · C/C++ · Java · JS · SQL · Go · R · Swift</div></div>
+            <div><div class="skill-cat-title">AI / CV</div><div class="skill-items">YOLO · OpenCV · NumPy · Pandas · PyTorch · Tracking</div></div>
+            <div><div class="skill-cat-title">Frameworks</div><div class="skill-items">React · Flask · Tauri · Firebase · JUnit · ORM</div></div>
+            <div><div class="skill-cat-title">Tools</div><div class="skill-items">Git · Android Studio · Power BI · VS Code · Arduino</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact-section" id="contact">
+    <div class="section-inner">
+      <div class="reveal"><div class="section-label">let's connect</div><div class="section-title">Say hello</div></div>
+      <div class="section-divider reveal stagger-1"></div>
+      <div class="contact-grid">
+        <a href="mailto:selou073@uottawa.ca" class="contact-card reveal stagger-1"><span class="contact-icon"><i class="ti ti-mail" style="font-size:22px;color:var(--accent)"></i></span><div><span class="contact-label">Email</span><span class="contact-val">selou073@uottawa.ca</span></div></a>
+        <a href="tel:3435733664" class="contact-card reveal stagger-2"><span class="contact-icon"><i class="ti ti-phone" style="font-size:22px;color:var(--accent)"></i></span><div><span class="contact-label">Phone</span><span class="contact-val">343-573-3664</span></div></a>
+        <a href="https://linkedin.com/in/sofia-elouazzani" class="contact-card reveal stagger-3"><span class="contact-icon"><i class="ti ti-brand-linkedin" style="font-size:22px;color:#6699dd"></i></span><div><span class="contact-label">LinkedIn</span><span class="contact-val">sofia-elouazzani</span></div></a>
+        <a href="https://github.com/Sofiaelouazzani" class="contact-card reveal stagger-4"><span class="contact-icon"><i class="ti ti-brand-github" style="font-size:22px;color:var(--ink2)"></i></span><div><span class="contact-label">GitHub</span><span class="contact-val">Sofiaelouazzani</span></div></a>
+      </div>
+      <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start">
+        <div class="edu-card reveal stagger-5">
+          <div style="font-family:'Caveat',cursive;font-size:1rem;font-weight:700;color:var(--ink)">🎓 University of Ottawa</div>
+          <div style="font-family:'Caveat',cursive;font-size:.9rem;color:var(--ink3)">BSc Computer Science + Physics Minor · 2023–2027</div>
+          <div style="font-family:'Caveat',cursive;font-size:.85rem;color:var(--accent);margin-top:2px">$40,000 entry scholarship</div>
+        </div>
+        <div class="cert-card reveal stagger-6">
+          <div class="cert-title">🔐 ISC² Certified in Cybersecurity (CC)</div>
+          <div class="cert-sub">March 2025 · Security, access control, incident response</div>
+        </div>
+      </div>
+      <div style="margin-top:2rem;font-family:'Caveat',cursive;font-size:.95rem;color:var(--ink3);text-align:center" class="reveal">Ottawa, ON · Open to opportunities ✦</div>
+    </div>
+  </section>
+</div>
+
+<script>
+const sections = ['hero','projects','experience','about','contact'];
+
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function toggleExp(header) {
+  const card = header.closest('.exp-card');
+  card.dataset.open = card.dataset.open === 'true' ? 'false' : 'true';
+}
+
+function filterExp(cat, btn) {
+  document.querySelectorAll('.exp-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.exp-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    if (cat !== 'all' && card.dataset.cat !== cat) card.dataset.open = 'false';
+  });
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      document.querySelectorAll('.nav-link').forEach((l,i) => {
+        l.classList.toggle('active', sections[i] === id);
+      });
+    }
+  });
+}, {threshold: 0.4});
+sections.forEach(id => { const el = document.getElementById(id); if(el) secObs.observe(el); });
+
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+}, {passive:true});
+
+const doodleLayer = document.getElementById('doodleLayer');
+function makeSneaker(x,y,rot,scale,col){
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 80 40');s.setAttribute('width',80*scale);s.setAttribute('height',40*scale);
+  s.style.cssText=`position:absolute;left:${x}px;top:${y}px;transform:rotate(${rot}deg);opacity:0.08;pointer-events:none`;
+  s.innerHTML=`<path d="M5 28 Q8 20 18 18 L30 16 Q40 12 50 14 L68 18 Q75 20 74 26 Q73 30 65 31 L12 32 Q5 32 5 28Z" fill="${col}"/><path d="M18 18 L22 10 Q26 6 30 10 L28 16" fill="none" stroke="${col}" stroke-width="1.5" stroke-linecap="round"/><path d="M30 16 Q38 10 50 14" fill="none" stroke="${col}" stroke-width="1"/><path d="M34 15 L36 9 M42 13 L43 8 M50 14 L50 9" stroke="${col}" stroke-width="0.8" stroke-linecap="round"/>`;
+  return s;
+}
+function makePencil(x,y,rot,scale,col){
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 14 80');s.setAttribute('width',14*scale);s.setAttribute('height',80*scale);
+  s.style.cssText=`position:absolute;left:${x}px;top:${y}px;transform:rotate(${rot}deg);opacity:0.08;pointer-events:none`;
+  s.innerHTML=`<rect x="2" y="8" width="10" height="58" rx="1" fill="${col}"/><polygon points="2,66 12,66 7,78" fill="#a06030"/><rect x="2" y="8" width="10" height="5" fill="#888"/>`;
+  return s;
+}
+function makeSquiggle(x,y,rot){
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  s.setAttribute('viewBox','0 0 80 20');s.setAttribute('width','80');s.setAttribute('height','20');
+  s.style.cssText=`position:absolute;left:${x}px;top:${y}px;transform:rotate(${rot}deg);opacity:0.08;pointer-events:none`;
+  s.innerHTML=`<path d="M2 10 Q12 2 22 10 Q32 18 42 10 Q52 2 62 10 Q72 18 78 10" stroke="#c4b89a" stroke-width="1.5" fill="none" stroke-linecap="round"/>`;
+  return s;
+}
+
+const sc=['#c47a2e','#3b5fa0','#8a3a8a','#2a8a4a','#c43a3a'];
+const pc=['#c47a2e','#3b5fa0','#8a3a8a'];
+function placeItems() {
+  doodleLayer.innerHTML = '';
+  const W = window.innerWidth;
+  const H = document.documentElement.scrollHeight;
+  const rows = 10;
+  const rowH = H / rows;
+
+  const sneakerCols = [sc[0],sc[1],sc[2],sc[3],sc[4]];
+  const pencilCols  = [pc[0],pc[1],pc[2]];
+
+  for (let i = 0; i < rows; i++) {
+    const yBase = i * rowH + rowH * 0.2;
+    // left sneaker
+    doodleLayer.appendChild(makeSneaker(W*0.01, yBase, 10+i*3, 1+i%3*0.1, sneakerCols[i%5]));
+    // right sneaker
+    doodleLayer.appendChild(makeSneaker(W*0.88, yBase + rowH*0.3, -(8+i*2), 0.95, sneakerCols[(i+2)%5]));
+    // left pencil
+    doodleLayer.appendChild(makePencil(W*0.005, yBase + rowH*0.55, 15+i*4, 1, pencilCols[i%3]));
+    // right pencil
+    doodleLayer.appendChild(makePencil(W*0.955, yBase + rowH*0.1, -(18+i*3), 1.05, pencilCols[(i+1)%3]));
+    // squiggles
+    doodleLayer.appendChild(makeSquiggle(W*0.08, yBase + rowH*0.75, -5+i%3*4));
+    doodleLayer.appendChild(makeSquiggle(W*0.82, yBase + rowH*0.6,   6-i%3*3));
+  }
+}
+placeItems();
+window.addEventListener('resize', placeItems);
+</script>
